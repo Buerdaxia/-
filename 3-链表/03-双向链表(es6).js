@@ -1,21 +1,20 @@
-// 封装单向链表类
-function LinkedList() {
-	// 内部节点类
-	function Node(data) {
-		// 数据
+// import { LinkedList, Node } from './04-单项链表(es6)';
+class Node {
+	constructor(data) {
 		this.data = data;
-		// 指针
 		this.next = null;
 	}
-	// 属性
-	// 头指针
-	this.head = null;
-	// 长度
-	this.length = 0;
+}
+
+class LinkedList {
+	constructor() {
+		this.head = null;
+		this.length = 0;
+	}
 
 	// 链表方法
 	// 一.往链表尾部追加元素
-	LinkedList.prototype.append = function(data) {
+	append(data) {
 		// 创建一个新节点
 		let newNode = new Node(data);
 		if (this.head === null) {
@@ -34,10 +33,10 @@ function LinkedList() {
 		}
 		// 更新一下数量
 		this.length += 1;
-	};
+	}
 
 	// 二.toString方法
-	LinkedList.prototype.toString = function() {
+	toString() {
 		// 1.定义当前节点
 		let currentNode = this.head;
 		let listString = '';
@@ -49,14 +48,14 @@ function LinkedList() {
 			currentNode = currentNode.next;
 		}
 		return listString;
-	};
+	}
 
 	// 三.insert插入方法
 	/**
 	 * @param {position} 位置信息
 	 * @param {data} 数据
 	 */
-	LinkedList.prototype.insert = function(position, data) {
+	insert(position, data) {
 		// 对position进行越界判断
 		if (position < 0 || position > this.length) return false;
 
@@ -86,13 +85,13 @@ function LinkedList() {
 		// 记录长度
 		this.length += 1;
 		return true;
-	};
+	}
 
 	// 四.get获取指定位置数据信息
 	/**
 	 * @param {position} 位置
 	 */
-	LinkedList.prototype.get = function(position) {
+	get(position) {
 		// 1.越界判断
 		if (position < 0 || position >= this.length) return null;
 
@@ -103,13 +102,13 @@ function LinkedList() {
 			currentNode = currentNode.next;
 		}
 		return currentNode.data;
-	};
+	}
 
 	// 五.indexOf获取指定内容在链表中的下标
 	/**
 	 * @param {data} 数据
 	 */
-	LinkedList.prototype.indexOf = function(data) {
+	indexOf(data) {
 		// 定义变量
 		let currentNode = this.head;
 		let index = 0;
@@ -124,14 +123,14 @@ function LinkedList() {
 		}
 		// 如果没找到就直接返回-1
 		return -1;
-	};
+	}
 
 	// 六.update方法
 	/**
 	 * @param {position} 位置
 	 * @param {data} 要更新的数据
 	 */
-	LinkedList.prototype.update = function(position, data) {
+	update(position, data) {
 		// 越界判断
 		if (position < 0 || position >= this.length) return false;
 
@@ -144,13 +143,13 @@ function LinkedList() {
 		// 修改节点data
 		currentNode.data = data;
 		return true;
-	};
+	}
 
 	// 七.removeAt方法，移除指定下标节点
 	/**
 	 * @param {position} 位置
 	 */
-	LinkedList.prototype.removeAt = function(position) {
+	removeAt(position) {
 		// 越界判断
 		if (position < 0 || position >= this.length) return null;
 
@@ -175,26 +174,62 @@ function LinkedList() {
 		this.length -= 1;
 
 		return currentNode.data;
-	};
+	}
 
 	// 八:remove方法，根据数据删除，使用分装好的方法即可
 
-	LinkedList.prototype.remove = function(data) {
+	remove(data) {
 		/**
 		 * @function indexOf 根据数据获取位置
 		 * @function removeAt 根据position删除数据
 		 */
 		let position = this.indexOf(data);
 		return this.removeAt(position);
-	};
+	}
 
 	// 九:isEmpty方法，判空
-	LinkedList.prototype.isEmpty = function() {
+	isEmpty() {
 		return this.length === 0;
-	};
+	}
 
 	// 十:size返回链表中节点个数
-	LinkedList.prototype.size = function() {
+	size() {
 		return this.length;
-	};
+	}
 }
+
+class DoublyNode extends Node {
+	constructor(data) {
+		// 继承一下属性
+		super(data);
+		this.prev = null;
+	}
+}
+
+class DoublyLinkedList extends LinkedList {
+	constructor() {
+		// 继承 head, length
+		super();
+		this.tail = null;
+	}
+
+	// 1.尾部添加一个节点
+	append(data) {
+		const newNode = new DoublyNode(data);
+		if (this.length === 0) {
+			// 情况一：链表没有元素
+			this.head = newNode;
+			this.tail = newNode;
+		} else {
+			// 1.修改尾部节点的next，指向添加进来的节点
+			this.tail.next = newNode;
+			// 2.修改新节点的prev
+			newNode.prev = this.tail;
+			// 3.修改tail
+			this.tail = newNode;
+		}
+		this.length += 1;
+	}
+}
+
+// const list = new DoublyLinkedList();
