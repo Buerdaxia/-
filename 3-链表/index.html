@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="./01-单项列表.js"></script>
+  <title>链表</title>
+</head>
+
+<body>
+  <script>
+    let list = new linkedList();
+    list.append('钱');
+    list.append('恩');
+    list.append('慈');
+    list.insert(3, 'nb')
+    list.update(3, 'nbwl');
+    console.log(list.toString());
+    console.log(list.get(3));
+    console.log(list.indexOf('钱'));
+    // console.log(list.removeAt(3));
+    console.log('1', list.remove('钱'))
+    // console.log('removeAt后:', list.toString());
+    console.log('remove后:', list.toString());
+    console.log(list.isEmpty());
+    console.log(list.size());
+  </script>
+</body>
+
+</html>
